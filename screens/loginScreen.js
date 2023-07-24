@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, Alert, ActivityIndicator } from 'react-native';
 import axios from 'axios';
+import { IP_ADDRESS } from '../constants/constants';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -25,12 +26,13 @@ const LoginScreen = ({ navigation }) => {
     };
 
     axios
-      .post('http://139.184.223.176:5000/api/auth/login', user)
+      .post(`${IP_ADDRESS}:5000/api/auth/login`, user)
       .then((response) => {
         setLoading(false);
         if (response.data.status === 'success') {
           // save token, navigate to home or do something
           alert('Logged in successfully');
+          navigation.navigate('Home', { token: response.data.token, userId: response.data.userId });
         } else {
           alert('Invalid username or password');
         }
@@ -59,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
       {loading && <ActivityIndicator />}
       <Button
         title="Don't have an account? Sign up"
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigation.navigate('Register')} 
       />
     </View>
   );
