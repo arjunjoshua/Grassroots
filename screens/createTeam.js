@@ -34,7 +34,7 @@ function CreateTeam({ route, navigation }) {
       kitColor,
       coachID: userID,
     };
-    console.log(team.coachID);
+    
     axios
       .post(`${IP_ADDRESS}:5000/api/teams`, team)
         .then((response) => {
