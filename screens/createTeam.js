@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 
@@ -9,7 +9,7 @@ function CreateTeam({ route, navigation }) {
   const [proficiencyLevel, setProficiencyLevel] = useState('');
   const [kitColor, setKitColor] = useState('');
   const [loading, setLoading] = useState(false);
-  const { userID } = route.params;
+  const { token, userID } = route.params;
 
   const validateForm = () => {
     if (teamName.trim() === '' || ageGroup.trim() === '' || proficiencyLevel.trim() === '' || kitColor.trim() === '') {
@@ -34,14 +34,14 @@ function CreateTeam({ route, navigation }) {
       kitColor,
       coachID: userID,
     };
-
+    console.log(team.coachID);
     axios
       .post(`${IP_ADDRESS}:5000/api/teams`, team)
         .then((response) => {
             setLoading(false);
             if (response.data.status === 'success') {
                 Alert.alert('Success', 'Team created successfully');
-                navigation.navigate('Home');
+                navigation.navigate('Home', { token, userID});
             } else {
                 Alert.alert('Error', 'Something went wrong!');
             }

@@ -37,7 +37,7 @@ const RegisterScreen = ({ navigation }) => {
         setLoading(false);
         if (response.data.status === 'success') {
           Alert.alert('Success', 'Registered successfully');
-          navigation.navigate('CreateTeam');
+          navigation.navigate('Login');
         } else {
           Alert.alert('Error', 'Something went wrong!');
         }

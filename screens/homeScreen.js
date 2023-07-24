@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 
 const HomeScreen = ({ route, navigation }) => {
-  const { userID } = route.params;
+  const { token, userID } = route.params;
   const handleCreateTeam = () => {
     const token = route.params.token;
-    navigation.navigate('CreateTeam', { userID });
+    navigation.navigate('CreateTeam', { token,  userID });
   };
   return (
     <View>

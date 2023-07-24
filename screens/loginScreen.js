@@ -32,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
         if (response.data.status === 'success') {
           // save token, navigate to home or do something
           alert('Logged in successfully');
-          navigation.navigate('Home', { token: response.data.token, userId: response.data.userId });
+          navigation.navigate('Home', { token: response.data.token, userID: response.data.userId });
         } else {
           alert('Invalid username or password');
         }
