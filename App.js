@@ -1,7 +1,8 @@
 import React from 'react';
+import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import LoginScreen from './screens/loginScreen';
 import HomeScreen from './screens/homeScreen';
 import RegisterScreen from './screens/registerScreen';
@@ -10,7 +11,8 @@ import CreateTeam from './screens/createTeam';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function HomeDrawer() {
+function HomeDrawer({route}) {
+  const { token, userID } = route.params;
   return (
     <Drawer.Navigator 
     initialRouteName="Home"
@@ -21,8 +23,8 @@ function HomeDrawer() {
       </DrawerContentScrollView>
     )}
   >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="CreateTeam" component={CreateTeam} />
+      <Drawer.Screen name="HomeDrawer" component={HomeScreen} initialParams={{ token, userID}} options={{ title: 'Home'}} />
+      <Drawer.Screen name="CreateTeam" component={CreateTeam} initialParams={{ token, userID}}/>
     </Drawer.Navigator>
   );
 }
