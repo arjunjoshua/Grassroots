@@ -7,6 +7,7 @@ import LoginScreen from './screens/loginScreen';
 import HomeScreen from './screens/homeScreen';
 import RegisterScreen from './screens/registerScreen';
 import CreateTeam from './screens/createTeam';
+import CreateMatchPost from './screens/createMatchPost';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -24,7 +25,8 @@ function HomeDrawer({route}) {
     )}
   >
       <Drawer.Screen name="HomeDrawer" component={HomeScreen} initialParams={{ token, userID}} options={{ title: 'Home'}} />
-      <Drawer.Screen name="CreateTeam" component={CreateTeam} initialParams={{ token, userID}}/>
+      <Drawer.Screen name="CreateTeam" component={CreateTeam} initialParams={{ token, userID}} options={{ title: 'Create a new team' }}/>
+      <Drawer.Screen name="CreateMatchPost" component={CreateMatchPost} initialParams={{ token, userID}} options={{ title: 'Create a new match' }}/>
     </Drawer.Navigator>
   );
 }

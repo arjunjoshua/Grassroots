@@ -7,11 +7,7 @@ const HomeScreen = ({ route, navigation }) => {
     const token = route.params.token;
     navigation.navigate('CreateTeam', { token,  userID });
   };
-
-  const handleLogout = () => {
-    navigation.navigate('Login');
-    Alert.alert('Logged out successfully');
-  };
+  
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Welcome home!</Text>
