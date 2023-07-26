@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import {styles} from '../components/styles.js'
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 
 function CreateTeam({ route, navigation }) {
   const [teamName, setTeamName] = useState('');
   const [ageGroup, setAgeGroup] = useState('');
-  const [proficiencyLevel, setProficiencyLevel] = useState('');
+  const [proficiencyLevel, setProficiencyLevel] = useState("1");
   const [kitColor, setKitColor] = useState('');
   const [loading, setLoading] = useState(false);
   const { token, userID } = route.params;
@@ -55,35 +57,34 @@ function CreateTeam({ route, navigation }) {
         
 
   return (
-    <View style={styles.container}>
+    <View style={styles.containerCreateTeam}>
       <Text>Team Name:</Text>
-      <TextInput style={styles.input} value={teamName} onChangeText={setTeamName} />
+      <TextInput style={styles.inputCreateTeam} value={teamName} onChangeText={setTeamName} />
 
       <Text>Age Group:</Text>
-      <TextInput style={styles.input} value={ageGroup} onChangeText={setAgeGroup} />
+      <TextInput style={styles.inputCreateTeam} value={ageGroup} onChangeText={setAgeGroup} />
 
       <Text>Proficiency Level:</Text>
-      <TextInput style={styles.input} value={proficiencyLevel} onChangeText={setProficiencyLevel} />
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={proficiencyLevel}
+          onValueChange={(itemValue, itemIndex) =>
+            setProficiencyLevel(itemValue)
+          }>
+          <Picker.Item label="1 - lowest" value="1" />
+          <Picker.Item label="2" value="2" />
+          <Picker.Item label="3" value="3" />
+          <Picker.Item label="4" value="4" />
+          <Picker.Item label="5 - highest" value="5" />
+        </Picker>
+      </View>
 
-      <Text>Kit Color:</Text>
-      <TextInput style={styles.input} value={kitColor} onChangeText={setKitColor} />
+      <Text>Kit Colours:</Text>
+      <TextInput style={styles.inputCreateTeam} value={kitColor} onChangeText={setKitColor} />
 
       <Button title="Create Team" onPress={handleSubmit} disabled={loading}/>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 16,
-  },
-});
 
 export default CreateTeam;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, Alert, ActivityIndicator } from 'react-native';
+import { styles } from '../components/styles';
+//import { CustomButton } from '../components/customButton';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 
@@ -48,20 +50,23 @@ const LoginScreen = ({ navigation }) => {
     <View>
       <TextInput
         value={username}
+        style={styles.input}
         onChangeText={(text) => setUsername(text)}
         placeholder="Username"
       />
       <TextInput
         value={password}
+        style={styles.input}
         onChangeText={(text) => setPassword(text)}
         placeholder="Password"
         secureTextEntry
       />
-      <Button title="Log in" onPress={handleLogin} disabled={loading} />
+      <Button title="Log in" onPress={handleLogin} disabled={loading} style={styles.button} />
       {loading && <ActivityIndicator />}
       <Button
         title="Don't have an account? Sign up"
         onPress={() => navigation.navigate('Register')} 
+        style={styles.button}
       />
     </View>
   );
