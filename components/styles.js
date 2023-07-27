@@ -5,6 +5,13 @@ export const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       padding: 16,
+      alignContent: 'center',
+    },
+
+    title: {
+      fontSize: 40,
+      fontWeight: 'bold',
+      marginBottom: 20,
     },
 
     input: {
@@ -61,5 +68,16 @@ export const styles = StyleSheet.create({
       borederRadius: 5,
       overflow: 'hidden',
       justifyContent: 'center',
+    },
+
+    buttonDateTime: {
+      marginBottom: 10,
+      backgroundColor: '#2196F3',
+      height: 30,
+      width: 175,
+      padding: 5,
+      alignItems: 'center',
+      textAlign: 'center',
+      borderRadius: 3,
     }
   });

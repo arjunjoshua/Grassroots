@@ -43,7 +43,10 @@ function CreateTeam({ route, navigation }) {
             setLoading(false);
             if (response.data.status === 'success') {
                 Alert.alert('Success', 'Team created successfully');
-                navigation.navigate('Home', { token, userID});
+                navigation.navigate('Home', {
+                screen: 'HomeDrawer',
+                params: { token, userID}
+                });
             } else {
                 Alert.alert('Error', 'Something went wrong!');
             }

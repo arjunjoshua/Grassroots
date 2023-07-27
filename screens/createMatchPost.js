@@ -1,25 +1,41 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Platform, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from '../components/styles.js';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const CreateMatchPost = ({ route }) => {
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState('');
+const CreateMatchPost = ({ route, navigation }) => {
   const [pitchName, setPitchName] = useState('');
   const [pitchLocation, setPitchLocation] = useState('');
   const [requiredAgeGroup, setRequiredAgeGroup] = useState('');
   const [requiredProficiencyLevel, setRequiredProficiencyLevel] = useState('');
   const [details, setDetails] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isPickerShown, setIsPickerShown] = useState(false);
+  const [isTimePickerShown, setIsTimePickerShown] = useState(false);
   const { token, userID } = route.params;
+
+  const now = new Date();
+
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const [time, setTime] = useState(now);
+  const [date, setDate] = useState(tomorrow);
+  
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
+    setIsPickerShown(Platform.OS === 'ios');
     setDate(currentDate);
+  };
+
+  const onChangeTime = (event, selectedTime) => {
+    const currentTime = selectedTime || time;
+    setIsTimePickerShown(Platform.OS === 'ios');
+    setTime(currentTime);
   };
 
   const handleCreatePost = () => {
@@ -41,7 +57,10 @@ const CreateMatchPost = ({ route }) => {
             setLoading(false);
             if (response.data.status === 'success') {
                 Alert.alert('Success', 'Post created successfully');
-                navigation.navigate('Home', { token, userID});
+                navigation.navigate('Home', {
+                screen: 'HomeDrawer',
+                params: { token, userID}
+              });
             } else {
                 Alert.alert('Error', 'Something went wrong!');
             }
@@ -54,22 +73,41 @@ const CreateMatchPost = ({ route }) => {
     };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.containerCreateTeam}>
+      {/* <Text style={styles.title}>Create Match Post</Text> */}
+
+      <TextInput style={styles.input} value={`Date: ${date.toLocaleDateString()}`} editable={false} />
+      <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsPickerShown(true)}>
+        <Text>Change Date</Text>
+      </TouchableOpacity>
+     
+      {isPickerShown && ( 
       <DateTimePicker
         testID="dateTimePicker"
         value={date}
         mode="date"
         is24Hour={true}
-        display="default"
+        display="Calendar"
         onChange={onChange}
+        minimumDate={now}
       />
+      )}
 
-      <TextInput
-        style={styles.input}
-        placeholder="Time"
+      <TextInput style={styles.input} value={`Time: ${time.toLocaleTimeString()}`} editable={false} />
+      <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsTimePickerShown(true)}>
+        <Text>Change Time</Text>
+      </TouchableOpacity>
+     
+      {isTimePickerShown && ( 
+      <DateTimePicker
+        testID="dateTimePicker"
         value={time}
-        onChangeText={setTime}
+        mode="time"
+        is24Hour={true}
+        display="Clock"
+        onChange={onChangeTime}
       />
+      )}
 
       <TextInput
         style={styles.input}
