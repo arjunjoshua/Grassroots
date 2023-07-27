@@ -6,6 +6,7 @@ import { styles } from '../components/styles.js';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import RNPickerSelect from 'react-native-picker-select';
 
 const CreateMatchPost = ({ route, navigation }) => {
   const [pitchName, setPitchName] = useState('');
@@ -16,6 +17,8 @@ const CreateMatchPost = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [isTimePickerShown, setIsTimePickerShown] = useState(false);
+  const [teams, setTeams] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const { token, userID } = route.params;
 
   const now = new Date();
@@ -25,12 +28,24 @@ const CreateMatchPost = ({ route, navigation }) => {
   const [time, setTime] = useState(now);
   const [date, setDate] = useState(tomorrow);
   
+  useEffect(() => {
+    axios.get(`${IP_ADDRESS}:5000/api/teamsInfo`, { params: { userID: userID } })
+        .then(response => setTeams(response.data.teams))
+        .catch(error => console.error('There was an error!', error));
+}, []);
+
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setIsPickerShown(Platform.OS === 'ios');
     setDate(currentDate);
   };
+
+  const handleTeamChange = (team) => {
+    setSelectedTeam(team);
+    setRequiredAgeGroup(team.age_group);
+    setRequiredProficiencyLevel(team.proficiency_level);
+}
 
   const onChangeTime = (event, selectedTime) => {
     const currentTime = selectedTime || time;
@@ -75,6 +90,12 @@ const CreateMatchPost = ({ route, navigation }) => {
   return (
     <View style={styles.containerCreateTeam}>
       {/* <Text style={styles.title}>Create Match Post</Text> */}
+
+      <Text>Team:</Text>
+      <RNPickerSelect
+          onValueChange={(value) => handleTeamChange(value)}
+          items={teams.map(team => ({ label: team.team_name, value: team }))}
+      />
 
       <TextInput style={styles.input} value={`Date: ${date.toLocaleDateString()}`} editable={false} />
       <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsPickerShown(true)}>
