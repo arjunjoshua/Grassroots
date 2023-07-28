@@ -26,7 +26,7 @@ function HomeDrawer({route}) {
   >
       <Drawer.Screen name="HomeDrawer" component={HomeScreen} initialParams={{ token, userID}} options={{ title: 'Home'}} />
       <Drawer.Screen name="CreateTeam" component={CreateTeam} initialParams={{ token, userID}} options={{ title: 'Create a new team' }}/>
-      <Drawer.Screen name="CreateMatchPost" component={CreateMatchPost} initialParams={{ token, userID}} options={{ title: 'Create a new match' }}/>
+      <Drawer.Screen name="CreateMatchPost" component={CreateMatchPost} initialParams={{ token, userID}} options={{ title: 'Create post for a match' }}/>
     </Drawer.Navigator>
   );
 }
@@ -35,7 +35,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Log In' }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Log In', headerLeft: null }} />
         <Stack.Screen name="Home" component={HomeDrawer} options={{ title: 'Home', headerShown: false }}  />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Register' }} />
       </Stack.Navigator>

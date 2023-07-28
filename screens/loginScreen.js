@@ -31,18 +31,15 @@ const LoginScreen = ({ navigation }) => {
     .post(`${IP_ADDRESS}:5000/api/auth/login`, user, { timeout: 15000 })
     .then((response) => {
       setLoading(false);
-      if (response.data.status === 'success') {
-        // navigate to home with token and userID as params
-        alert('Logged in successfully');
-        navigation.navigate('Home', { token: response.data.token, userID: response.data.userId });
-      } else {
-        alert('Invalid username or password');
-      }
+      // navigate to home with token and userID as params
+      navigation.navigate('Home', { token: response.data.token, userID: response.data.userId });
     })
     .catch((error) => {
       setLoading(false);
       if (error.code === 'ECONNABORTED') {
-        alert('Request took too long! Please try again.');
+        alert('Request timed out! Please try again.');
+      } else if (error.response && error.response.data.message === 'Invalid username or password') {
+        alert('Invalid username or password');
       } else {
         console.error('There was an error!', error);
         alert('Something went wrong! Please try again later.');
