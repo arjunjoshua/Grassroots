@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Platform, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -6,19 +6,20 @@ import { styles } from '../components/styles.js';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import RNPickerSelect from 'react-native-picker-select';
 
 const CreateMatchPost = ({ route, navigation }) => {
   const [pitchName, setPitchName] = useState('');
   const [pitchLocation, setPitchLocation] = useState('');
-  const [requiredAgeGroup, setRequiredAgeGroup] = useState('');
-  const [requiredProficiencyLevel, setRequiredProficiencyLevel] = useState('');
+  const [requiredAgeGroup, setRequiredAgeGroup] = useState('Age Group');
+  const [requiredProficiencyLevel, setRequiredProficiencyLevel] = useState('Proficiency Level');
   const [details, setDetails] = useState('');
-  const [loading, setLoading] = useState(false);
   const [isPickerShown, setIsPickerShown] = useState(false);
   const [isTimePickerShown, setIsTimePickerShown] = useState(false);
   const [teams, setTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+
   const { token, userID } = route.params;
 
   const now = new Date();
@@ -30,7 +31,7 @@ const CreateMatchPost = ({ route, navigation }) => {
   
   useEffect(() => {
     axios.get(`${IP_ADDRESS}:5000/api/teamsInfo`, { params: { userID: userID } })
-        .then(response => setTeams(response.data.teams))
+        .then(response => setTeams(response.data))
         .catch(error => console.error('There was an error!', error));
 }, []);
 
@@ -41,10 +42,11 @@ const CreateMatchPost = ({ route, navigation }) => {
     setDate(currentDate);
   };
 
-  const handleTeamChange = (team) => {
-    setSelectedTeam(team);
-    setRequiredAgeGroup(team.age_group);
-    setRequiredProficiencyLevel(team.proficiency_level);
+  const handleTeamChange = (teamID) => {
+    const selectedTeam = teams.find(team => team._id === teamID);
+    setSelectedTeam(selectedTeam);
+    setRequiredAgeGroup(selectedTeam.age_group);
+    setRequiredProficiencyLevel(selectedTeam.proficiency_level);
 }
 
   const onChangeTime = (event, selectedTime) => {
@@ -57,6 +59,7 @@ const CreateMatchPost = ({ route, navigation }) => {
     setLoading(true);
     
     const post = {
+        teamID: selectedTeam._id,
         date,
         time,
         pitchName,
@@ -89,13 +92,18 @@ const CreateMatchPost = ({ route, navigation }) => {
 
   return (
     <View style={styles.containerCreateTeam}>
-      {/* <Text style={styles.title}>Create Match Post</Text> */}
 
       <Text>Team:</Text>
-      <RNPickerSelect
-          onValueChange={(value) => handleTeamChange(value)}
-          items={teams.map(team => ({ label: team.team_name, value: team }))}
-      />
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={selectedTeam?._id}
+          onValueChange={(itemValue, itemIndex) => handleTeamChange(itemValue)}
+        >
+          {teams.map((team, index) => (
+            <Picker.Item key={index} label={team.team_name} value={team._id} />
+          ))}
+        </Picker>
+      </View>
 
       <TextInput style={styles.input} value={`Date: ${date.toLocaleDateString()}`} editable={false} />
       <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsPickerShown(true)}>
@@ -146,22 +154,15 @@ const CreateMatchPost = ({ route, navigation }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="Required Age Group"
         value={requiredAgeGroup}
-        onChangeText={setRequiredAgeGroup}
+        editable={false}
       />
 
-      <Picker
-        selectedValue={requiredProficiencyLevel}
-        style={styles.pickerContainer}
-        onValueChange={(itemValue) => setRequiredProficiencyLevel(itemValue)}
-      >
-        <Picker.Item label="1" value="1" />
-        <Picker.Item label="2" value="2" />
-        <Picker.Item label="3" value="3" />
-        <Picker.Item label="4" value="4" />
-        <Picker.Item label="5" value="5" />
-      </Picker>
+      <TextInput
+        style={styles.input}
+        value={requiredProficiencyLevel}
+        editable={false}
+      />
 
       <TextInput
         style={styles.input}

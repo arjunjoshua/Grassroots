@@ -15,7 +15,7 @@ const Drawer = createDrawerNavigator();
 function HomeDrawer({route}) {
   const { token, userID } = route.params;
   return (
-    <Drawer.Navigator 
+    <Drawer.Navigator
     initialRouteName="Home"
     drawerContent={(props) => (
       <DrawerContentScrollView {...props}>
@@ -36,7 +36,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Log In' }} />
-        <Stack.Screen name="Home" component={HomeDrawer} options={{ title: 'Home' }} />
+        <Stack.Screen name="Home" component={HomeDrawer} options={{ title: 'Home', headerShown: false }}  />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Register' }} />
       </Stack.Navigator>
     </NavigationContainer>

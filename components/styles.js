@@ -79,5 +79,17 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       textAlign: 'center',
       borderRadius: 3,
-    }
+    },
+
+    registerText: {
+      fontSize: 16,
+      color: '#000', 
+      marginTop: 17,
+      textAlign: 'center',
+    },
+
+    hyperlink: {
+      color: 'blue', 
+      textDecorationLine: 'underline',
+    },
   });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextInput, View, Alert, ActivityIndicator } from 'react-native';
+import { Button, Text,   TextInput, View, Alert, ActivityIndicator } from 'react-native';
 import { styles } from '../components/styles';
 //import { CustomButton } from '../components/customButton';
 import axios from 'axios';
@@ -28,26 +28,31 @@ const LoginScreen = ({ navigation }) => {
     };
 
     axios
-      .post(`${IP_ADDRESS}:5000/api/auth/login`, user)
-      .then((response) => {
-        setLoading(false);
-        if (response.data.status === 'success') {
-          // save token, navigate to home or do something
-          alert('Logged in successfully');
-          navigation.navigate('Home', { token: response.data.token, userID: response.data.userId });
-        } else {
-          alert('Invalid username or password');
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
+    .post(`${IP_ADDRESS}:5000/api/auth/login`, user, { timeout: 15000 })
+    .then((response) => {
+      setLoading(false);
+      if (response.data.status === 'success') {
+        // navigate to home with token and userID as params
+        alert('Logged in successfully');
+        navigation.navigate('Home', { token: response.data.token, userID: response.data.userId });
+      } else {
+        alert('Invalid username or password');
+      }
+    })
+    .catch((error) => {
+      setLoading(false);
+      if (error.code === 'ECONNABORTED') {
+        alert('Request took too long! Please try again.');
+      } else {
         console.error('There was an error!', error);
         alert('Something went wrong! Please try again later.');
-      });
+      }
+    });
   };
+  
 
   return (
-    <View>
+    <View style={styles.containerCreateTeam}>
       <TextInput
         value={username}
         style={styles.input}
@@ -63,11 +68,13 @@ const LoginScreen = ({ navigation }) => {
       />
       <Button title="Log in" onPress={handleLogin} disabled={loading} style={styles.button} />
       {loading && <ActivityIndicator />}
-      <Button
-        title="Don't have an account? Sign up"
-        onPress={() => navigation.navigate('Register')} 
-        style={styles.button}
-      />
+      <Text style={{...styles.registerText, marginBottom: 10}}>{`Don't have an account? `}
+        <Text 
+          style={styles.hyperlink} 
+          onPress={() => navigation.navigate('Register')}>
+          Sign up
+        </Text>
+      </Text>
     </View>
   );
 };
