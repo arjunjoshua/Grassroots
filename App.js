@@ -28,7 +28,7 @@ function HomeDrawer({route}) {
       <Drawer.Screen name="HomeDrawer" component={HomeScreen} initialParams={{ token, userID}} options={{ title: 'Home'}} />
       <Drawer.Screen name="CreateTeam" component={CreateTeam} initialParams={{ token, userID}} options={{ title: 'Create a new team' }}/>
       <Drawer.Screen name="CreateMatchPost" component={CreateMatchPost} initialParams={{ token, userID}} options={{ title: 'Create post for a match' }}/>
-      <Drawer.Screen name="AvailableMatches" component={OpenMatchesScreen} options={{ title: 'Available Matches' }}/>
+      <Drawer.Screen name="AvailableMatches" component={OpenMatchesScreen} initialParams={{userID}} options={{ title: 'Available Matches' }}/>
     </Drawer.Navigator>
   );
 }

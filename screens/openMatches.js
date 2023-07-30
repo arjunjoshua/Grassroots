@@ -4,10 +4,11 @@ import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 import { Picker } from '@react-native-picker/picker';
 
-const OpenMatchesScreen = ({ navigation }) => {
+const OpenMatchesScreen = ({ navigation, route }) => {
   const [ageGroup, setAgeGroup] = useState('');
   const [matches, setMatches] = useState([]);
   const [ageGroups, setAgeGroups] = useState('U-6');
+  const { userID } = route.params;
 
   useEffect(() => {
     if (ageGroup) {
@@ -17,6 +18,27 @@ const OpenMatchesScreen = ({ navigation }) => {
         .catch(error => console.error('There was an error!', error));
     }
   }, [ageGroup]);
+
+  const onInterested = matchId => {
+    const post = {
+      userID,
+      matchId,
+    }
+
+    axios
+      .post(`${IP_ADDRESS}:5000/api/matchPost/interested`, post)
+      .then(response => {
+        if (response.data.status === 'success') {
+          Alert.alert('Success', 'The coach has been notified of your interest');
+        } else {
+          Alert.alert('Error', 'Something went wrong!');
+        }
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+        Alert.alert('Error', 'Something went wrong! Please try again later.');
+      });
+  };
 
   const renderMatch = ({ item }) => {
     const dateObject = new Date(item.date);
@@ -34,6 +56,7 @@ const OpenMatchesScreen = ({ navigation }) => {
       <Text>{item.pitchLocation}</Text>
       <Text>{formattedDate}</Text>
       <Text>{formattedTime}</Text>
+      <Button title={"Interested"} onPress={() => onInterested(item._id)} />
     </View>
     );
   };
