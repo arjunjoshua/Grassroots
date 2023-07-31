@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 import { Picker } from '@react-native-picker/picker';
@@ -9,57 +9,63 @@ const OpenMatchesScreen = ({ navigation, route }) => {
   const [matches, setMatches] = useState([]);
   const [ageGroups, setAgeGroups] = useState('U-6');
   const { userID } = route.params;
+  const [isInterested, setIsInterested] = useState(false);
 
   useEffect(() => {
     if (ageGroup) {
       axios
-        .get(`${IP_ADDRESS}:5000/api/matchPost/openMatches`, { params: { ageGroup } })
+        .get(`${IP_ADDRESS}:5000/api/matchPost/openMatches`, { params: { ageGroup, userID } })
         .then(response => setMatches(response.data.matchPosts))
         .catch(error => console.error('There was an error!', error));
     }
   }, [ageGroup]);
 
-  const onInterested = matchId => {
-    const post = {
-      userID,
-      matchId,
-    }
 
-    axios
-      .post(`${IP_ADDRESS}:5000/api/matchPost/interested`, post)
-      .then(response => {
-        if (response.data.status === 'success') {
-          Alert.alert('Success', 'The coach has been notified of your interest');
-        } else {
-          Alert.alert('Error', 'Something went wrong!');
+    const MatchItem = ({ item }) => {
+      const [isInterested, setIsInterested] = useState(false);
+
+      const dateObject = new Date(item.date);
+      const timeObject = new Date(item.time);
+
+      // Adjust for timezone
+      timeObject.setHours(timeObject.getHours() - 1);
+
+      const formattedDate = dateObject.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+      const formattedTime = timeObject.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+      const toggleInterest = () => {
+          axios
+              .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchPostID: item._id, userID, isInterested: !isInterested })
+              .then(response => {
+                  setIsInterested(!isInterested);
+              }
+              )
+              .catch(error => console.error('There was an error!', error));
+      };
+      useEffect(() => {
+        if (item.interested_users.includes(userID)) {
+            setIsInterested(true);
         }
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-        Alert.alert('Error', 'Something went wrong! Please try again later.');
-      });
+    }, [item]);
+
+      return (
+          <View style={styles.matchContainer}>
+              <Text>{item.pitchName}</Text>
+              <Text>{item.pitchLocation}</Text>
+              <Text>{formattedDate}</Text>
+              <Text>{formattedTime}</Text>
+              <Button
+                  title={isInterested ? 'Not Interested' : 'Interested'}
+                  onPress={toggleInterest}
+                  color={isInterested ? 'green' : null}
+              />
+          </View>
+      );
   };
 
-  const renderMatch = ({ item }) => {
-    const dateObject = new Date(item.date);
-    const timeObject = new Date(item.time);
+  // ...
 
-    // Adjust for timezone
-    timeObject.setHours(timeObject.getHours() - 1);
-
-    const formattedDate = dateObject.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-    const formattedTime = timeObject.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
-
-    return (
-    <View style={styles.matchContainer}>
-      <Text>{item.pitchName}</Text>
-      <Text>{item.pitchLocation}</Text>
-      <Text>{formattedDate}</Text>
-      <Text>{formattedTime}</Text>
-      <Button title={"Interested"} onPress={() => onInterested(item._id)} />
-    </View>
-    );
-  };
+  const renderMatch = ({ item }) => <MatchItem item={item} />;
 
   return (
     <View style={styles.container}>
