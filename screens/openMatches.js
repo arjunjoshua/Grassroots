@@ -37,9 +37,11 @@ const OpenMatchesScreen = ({ navigation, route }) => {
           axios
               .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchID: item._id, userID, isInterested: !isInterested })
               .then(response => {
+                if(response.data.status === 'success') 
                   setIsInterested(!isInterested);
-              }
-              )
+                else
+                  Alert.alert('Error', 'Your interest could not be recorded at this time. Please try again later.');
+      })
               .catch(error => {
                 console.error('There was an error!', error);
               });
