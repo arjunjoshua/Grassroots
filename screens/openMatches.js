@@ -35,12 +35,14 @@ const OpenMatchesScreen = ({ navigation, route }) => {
 
       const toggleInterest = () => {
           axios
-              .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchPostID: item._id, userID, isInterested: !isInterested })
+              .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchID: item._id, userID, isInterested: !isInterested })
               .then(response => {
                   setIsInterested(!isInterested);
               }
               )
-              .catch(error => console.error('There was an error!', error));
+              .catch(error => {
+                console.error('There was an error!', error);
+              });
       };
       useEffect(() => {
         if (item.interested_users.includes(userID)) {
@@ -54,11 +56,13 @@ const OpenMatchesScreen = ({ navigation, route }) => {
               <Text>{item.pitchLocation}</Text>
               <Text>{formattedDate}</Text>
               <Text>{formattedTime}</Text>
-              <Button
-                  title={isInterested ? 'Not Interested' : 'Interested'}
-                  onPress={toggleInterest}
-                  color={isInterested ? 'green' : null}
-              />
+              <TouchableOpacity 
+                style={{backgroundColor: isInterested ? 'green' : 'grey'}}
+                onPress={toggleInterest}
+            >
+                <Text style={{color: 'white'}}>Interested</Text>
+            </TouchableOpacity>
+
           </View>
       );
   };
