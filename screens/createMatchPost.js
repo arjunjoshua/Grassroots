@@ -67,6 +67,7 @@ const CreateMatchPost = ({ route, navigation }) => {
         requiredAgeGroup,
         requiredProficiencyLevel,
         details,
+        coach_id: userID,
   };
 
     axios

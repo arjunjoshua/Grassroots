@@ -10,7 +10,7 @@ const OpenMatchesScreen = ({ navigation, route }) => {
   const [matches, setMatches] = useState([]);
   // const [ageGroups, setAgeGroups] = useState('U-6');
   const { userID } = route.params;
-  const [isInterested, setIsInterested] = useState(false);
+  // const [isInterested, setIsInterested] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [teams, setTeams] = useState([]);
 
@@ -21,11 +21,19 @@ const OpenMatchesScreen = ({ navigation, route }) => {
         .then(response => setMatches(response.data.matchPosts))
         .catch(error => console.error('There was an error!', error));
     }
-      axios
+      axios 
         .get(`${IP_ADDRESS}:5000/api/teamsInfo`, { params: { userID: userID } })
         .then(response => setTeams(response.data))
         .catch(error => console.error('There was an error!', error));
   }, [ageGroup]);
+
+  const handleTeamChange = (teamID) => {
+    const selectedTeam = teams.find(team => team._id === teamID);
+    setSelectedTeam(selectedTeam);
+    setAgeGroup(selectedTeam.age_group);
+    //setRequiredProficiencyLevel(selectedTeam.proficiency_level);
+  }
+
 
 
     const MatchItem = ({ item }) => {
@@ -40,16 +48,10 @@ const OpenMatchesScreen = ({ navigation, route }) => {
       const formattedDate = dateObject.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
       const formattedTime = timeObject.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
 
-      const handleTeamChange = (teamID) => {
-      const selectedTeam = teams.find(team => team._id === teamID);
-      setSelectedTeam(selectedTeam);
-      setAgeGroup(selectedTeam.age_group);
-      //setRequiredProficiencyLevel(selectedTeam.proficiency_level);
-}
-
       const toggleInterest = () => {
-          axios
-              .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchID: item._id, userID, isInterested: !isInterested })
+          console.log(selectedTeam._id)
+        axios
+              .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchID: item._id, userID, isInterested: !isInterested, teamID: selectedTeam._id })
               .then(response => {
                 if(response.data.status === 'success') 
                   setIsInterested(!isInterested);
@@ -57,7 +59,7 @@ const OpenMatchesScreen = ({ navigation, route }) => {
                   Alert.alert('Error', 'Your interest could not be recorded at this time. Please try again later.');
       })
               .catch(error => {
-                console.error('There was an error!', error);
+                console.error(error);
               });
       };
       useEffect(() => {
@@ -107,7 +109,7 @@ const OpenMatchesScreen = ({ navigation, route }) => {
         <Picker.Item label="Under 17" value="U-17" />
         <Picker.Item label="Under 18" value="U-18" />
       </Picker> */}
-      <Text>Team:</Text>
+      <Text>Select Your Team:</Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={selectedTeam?._id}

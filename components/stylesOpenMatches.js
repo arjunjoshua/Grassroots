@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
       borderColor: 'gray',
       borderWidth: 1,
       marginBottom: 16,
+      marginTop: 16,
       borederRadius: 5,
       overflow: 'hidden',
       justifyContent: 'center',

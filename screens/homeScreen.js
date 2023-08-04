@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Button, Alert, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Alert, FlatList, Modal, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { Badge, IconButton } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { IP_ADDRESS } from '../constants/constants';
-import { set } from 'mongoose';
+import { styles } from '../components/stylesHomeScreen';
 
 const HomeScreen = ({ route, navigation }) => {
   const { token, userID } = route.params;
@@ -35,7 +35,8 @@ const HomeScreen = ({ route, navigation }) => {
   const renderNotification = ({ item }) => (
     <View style={styles.notificationContainer}>
       <Text style={styles.notificationMessage}>{item.message}</Text>
-      <Text style={styles.notificationDate}>{new Date(item.date).toLocaleString()}</Text>
+      <Text style={styles.notificationTeam}>{item.interested_team_name}</Text>
+      <Text style={styles.notificationDate}>{new Date(item.date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</Text>
     </View>
   );
 
@@ -84,7 +85,7 @@ const HomeScreen = ({ route, navigation }) => {
           ) : (
             <FlatList
               data={notifications}
-              renderItem={({ item }) => <Text style={styles.modalText}>{item.message}</Text>}
+              renderItem={renderNotification}
               keyExtractor={(item, index) => index.toString()}
             />
           )}
@@ -93,104 +94,5 @@ const HomeScreen = ({ route, navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f5f5f5',
-    padding: 16,
-  },
-  teamContainer: {
-    backgroundColor: '#1fff1',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 6,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    borderRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    height : 75,
-    width : 350,
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  team_name: {
-    fontSize: 17,
-    fontWeight: 'bold',
-  },
-  team_info: {
-    fontSize: 15,
-  },
-  badge: {
-    position: 'absolute',
-    right: -6,
-    top: -3,
-    backgroundColor: 'red',
-    zIndex: 2,
-  },
-  notificationContainer: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  notificationMessage: {
-    fontSize: 16,
-  },
-  notificationDate: {
-    fontSize: 14,
-    color: '#888',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    marginTop: 100,
-    width: 400,
-    backgroundColor: "grey",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-});
-
 
 export default HomeScreen;
