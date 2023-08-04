@@ -65,8 +65,25 @@ function CreateTeam({ route, navigation }) {
       <TextInput style={styles.inputCreateTeam} value={teamName} onChangeText={setTeamName} />
 
       <Text>Age Group:</Text>
-      <TextInput style={styles.inputCreateTeam} value={ageGroup} onChangeText={setAgeGroup} />
-
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={ageGroup}
+          onValueChange={(itemValue, itemIndex) => setAgeGroup(itemValue)}>
+          <Picker.Item label="Under 6" value="U-6" />
+          <Picker.Item label="Under 7" value="U-7" />
+          <Picker.Item label="Under 8" value="U-8" />
+          <Picker.Item label="Under 9" value="U-9" />
+          <Picker.Item label="Under 10" value="U-10" />
+          <Picker.Item label="Under 11" value="U-11" />
+          <Picker.Item label="Under 12" value="U-12" />
+          <Picker.Item label="Under 13" value="U-13" />
+          <Picker.Item label="Under 14" value="U-14" />
+          <Picker.Item label="Under 15" value="U-15" />
+          <Picker.Item label="Under 16" value="U-16" />
+          <Picker.Item label="Under 17" value="U-17" />
+          <Picker.Item label="Under 18" value="U-18" />
+        </Picker>
+      </View>
       <Text>Proficiency Level:</Text>
       <View style={styles.pickerContainer}>
         <Picker
