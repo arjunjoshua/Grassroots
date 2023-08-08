@@ -63,7 +63,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <TextInput
         value={password}
-        style={styles.input}
+        style={styles.inputEmail} //using inputEmail just to ensure the spacing witht the button is the same as the register screen
         onChangeText={(text) => setPassword(text)}
         placeholder="Password"
         secureTextEntry

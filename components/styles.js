@@ -18,9 +18,34 @@ export const styles = StyleSheet.create({
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
+      marginTop: 20,
+      borderRadius: 5,
+      paddingHorizontal: 10,
+    },
+
+    inputPassword: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginTop: 20,
+      marginBottom: 5,
+      borderRadius: 5,
+      paddingHorizontal: 10,
+    },
+
+    inputEmail: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginTop: 20,
       marginBottom: 20,
       borderRadius: 5,
       paddingHorizontal: 10,
+    },
+
+    passwordInstruction: {
+      fontSize: 12,
+      fontStyle: 'italic',
     },
 
     button: {

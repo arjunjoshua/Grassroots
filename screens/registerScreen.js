@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, TextInput, View, Alert, ActivityIndicator } from 'react-native';
+import { Button, TextInput, Text, View, Alert, ActivityIndicator } from 'react-native';
 import { styles } from '../components/styles';
 import axios from 'axios';
-import { IP_ADDRESS, emailRegex } from '../constants/constants';
+import { IP_ADDRESS, emailRegex, passwordRegex, nameRegex } from '../constants/constants';
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -15,9 +15,19 @@ const RegisterScreen = ({ navigation }) => {
       Alert.alert('Validation Error', 'All fields are required');
       return false;
     }
+    
+    if (!nameRegex.test(username.trim())) {
+      Alert.alert('Validation Error', 'Please enter your full name');
+      return false;
+    }
 
     if (!emailRegex.test(email.trim())) {
       Alert.alert('Validation Error', 'Please enter a valid email address');
+      return false;
+    }
+
+    if (!passwordRegex.test(password.trim())) {
+      Alert.alert('Validation Error', 'Password must be at least 8 characters long and contain at least 1 special character');
       return false;
     }
 
@@ -64,18 +74,19 @@ const RegisterScreen = ({ navigation }) => {
         value={username}
         style={styles.input}
         onChangeText={(text) => setUsername(text)}
-        placeholder="Username"
+        placeholder="Full Name"
       />
       <TextInput
         value={password}
-        style={styles.input}
+        style={styles.inputPassword}
         onChangeText={(text) => setPassword(text)}
         placeholder="Password"
         secureTextEntry
       />
+      <Text style={styles.passwordInstruction}>'Minimum: 8 characters with 1 special character'</Text>
       <TextInput
         value={email}
-        style={styles.input}
+        style={styles.inputEmail}
         onChangeText={(text) => setEmail(text)}
         placeholder="Email"
       />
