@@ -34,8 +34,6 @@ const OpenMatchesScreen = ({ navigation, route }) => {
     //setRequiredProficiencyLevel(selectedTeam.proficiency_level);
   }
 
-
-
     const MatchItem = ({ item }) => {
       const [isInterested, setIsInterested] = useState(false);
 
@@ -49,7 +47,6 @@ const OpenMatchesScreen = ({ navigation, route }) => {
       const formattedTime = timeObject.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
 
       const toggleInterest = () => {
-          console.log(selectedTeam._id)
         axios
               .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchID: item._id, userID, isInterested: !isInterested, teamID: selectedTeam._id })
               .then(response => {

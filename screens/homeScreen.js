@@ -3,6 +3,7 @@ import { View, Text, Button, Alert, FlatList, Modal, TouchableOpacity } from 're
 import axios from 'axios';
 import { Badge, IconButton } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { IP_ADDRESS } from '../constants/constants';
 import { styles } from '../components/stylesHomeScreen';
 
@@ -44,12 +45,44 @@ const HomeScreen = ({ route, navigation }) => {
       });
   };
 
+  const handleNotificationAccept = (item) => {
+    axios.put(`${IP_ADDRESS}:5000/api/notifications/accept`, { userID: userID, notificationID: item._id })
+      .then((response) => {
+        Alert.alert('Success', 'Game Confirmed.');
+        setNotifications(response.data);
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+        Alert.alert('Error', error);
+      });
+  };
+
+  const handleNotificationDecline = (item) => {
+    axios.put(`${IP_ADDRESS}:5000/api/notifications`, { userID: userID, notificationID: item._id })
+      .then((response) => {
+        Alert.alert('Success', 'Game Declined.');
+        setNotifications(response.data);
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+        Alert.alert('Error', error);
+      });
+  };
+
   const renderNotification = ({ item }) => (
-    <TouchableOpacity onPress={() => handleNotificationPress(item)}>
+     <TouchableOpacity /*onPress={() => handleNotificationPress(item)}*/>
       <View style={styles.notificationContainer}>
-        <Text style={styles.notificationMessage}>{item.message}</Text>
+        <Text style={styles.notificationMessage}>{item.message}</Text>  
         <Text style={styles.notificationTeam}>{item.interested_team_name}</Text>
         <Text style={styles.notificationDate}>{new Date(item.date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.acceptButton} onPress={() => handleNotificationAccept(item)}>
+            <Icon name="check" size={15} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.declineButton} onPress={() => handleNotificationDecline(item)}>
+            <Icon name="times" size={15} color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );

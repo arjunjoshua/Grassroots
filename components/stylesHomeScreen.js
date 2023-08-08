@@ -107,4 +107,31 @@ export const styles = StyleSheet.create({
       padding: 10,
       borderRadius: 20,
     },
+
+    // Accept and Decline Buttons
+    buttonContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 10,
+    },
+  
+    acceptButton: {
+      backgroundColor: 'green',
+      paddingVertical: 5,
+      paddingHorizontal: 8,
+      borderRadius: 5,
+      marginRight: 5,  // Space between the two buttons
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+  
+    declineButton: {
+      backgroundColor: 'red',
+      paddingVertical: 5,
+      paddingHorizontal: 8,
+      borderRadius: 5,
+      marginLeft: 5,   // Space between the two buttons
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
   });
