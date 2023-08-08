@@ -6,12 +6,12 @@ import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
-    if (username.trim() === '' || password.trim() === '') {
+    if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Validation Error', 'Please enter username and password');
       return false;
     }
@@ -23,9 +23,14 @@ const LoginScreen = ({ navigation }) => {
     setLoading(true);
 
     const user = {
-      username: username,
+      email: email,
       password: password,
     };
+
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
 
     axios
     .post(`${IP_ADDRESS}:5000/api/auth/login`, user, { timeout: 15000 })
@@ -38,8 +43,8 @@ const LoginScreen = ({ navigation }) => {
       setLoading(false);
       if (error.code === 'ECONNABORTED') {
         alert('Request timed out! Please try again.');
-      } else if (error.response && error.response.data.message === 'Invalid username or password') {
-        alert('Invalid username or password');
+      } else if (error.response && error.response.data.message === 'Invalid email or password') {
+        alert('Invalid email or password');
       } else {
         console.error('There was an error!', error);
         alert('Something went wrong! Please try again later.');
@@ -51,10 +56,10 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.containerCreateTeam}>
       <TextInput
-        value={username}
+        value={email}
         style={styles.input}
-        onChangeText={(text) => setUsername(text)}
-        placeholder="Username"
+        onChangeText={(text) => setEmail(text)}
+        placeholder="Email"
       />
       <TextInput
         value={password}

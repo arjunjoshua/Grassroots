@@ -32,12 +32,26 @@ const HomeScreen = ({ route, navigation }) => {
       });
   }, []);
 
+  const handleNotificationPress = (item) => {
+    axios.put(`${IP_ADDRESS}:5000/api/notifications`, { userID: userID, notificationID: item._id })
+      .then((response) => {
+        Alert.alert('Success', 'Notification marked as read.');
+        setNotifications(response.data);
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+        Alert.alert('Error', error);
+      });
+  };
+
   const renderNotification = ({ item }) => (
-    <View style={styles.notificationContainer}>
-      <Text style={styles.notificationMessage}>{item.message}</Text>
-      <Text style={styles.notificationTeam}>{item.interested_team_name}</Text>
-      <Text style={styles.notificationDate}>{new Date(item.date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</Text>
-    </View>
+    <TouchableOpacity onPress={() => handleNotificationPress(item)}>
+      <View style={styles.notificationContainer}>
+        <Text style={styles.notificationMessage}>{item.message}</Text>
+        <Text style={styles.notificationTeam}>{item.interested_team_name}</Text>
+        <Text style={styles.notificationDate}>{new Date(item.date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</Text>
+      </View>
+    </TouchableOpacity>
   );
 
   const renderTeam = ({ item }) => (
@@ -54,7 +68,7 @@ const HomeScreen = ({ route, navigation }) => {
         <Text style={styles.title}>Your Teams: </Text>
         <IconButton
           icon={() => <Badge size={10} style={styles.badge}>{notifications.length}</Badge>}
-          color="#000"
+          color="black"
           size={20}
           onPress={() => setModalVisible(true)}
         />

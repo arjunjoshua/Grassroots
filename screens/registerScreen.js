@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, Alert, ActivityIndicator } from 'react-native';
 import { styles } from '../components/styles';
-//import { CustomButton } from '../components/customButton';
 import axios from 'axios';
-import { IP_ADDRESS } from '../constants/constants';
+import { IP_ADDRESS, emailRegex } from '../constants/constants';
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -14,6 +13,11 @@ const RegisterScreen = ({ navigation }) => {
   const validateForm = () => {
     if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
       Alert.alert('Validation Error', 'All fields are required');
+      return false;
+    }
+
+    if (!emailRegex.test(email.trim())) {
+      Alert.alert('Validation Error', 'Please enter a valid email address');
       return false;
     }
 

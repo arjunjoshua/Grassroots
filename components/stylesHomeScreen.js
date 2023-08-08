@@ -78,8 +78,8 @@ export const styles = StyleSheet.create({
       marginTop: 22
     },
     modalView: {
-      marginTop: 100,
-      width: 400,
+      flex: 1,
+      paddingTop: 50,
       backgroundColor: "grey",
       borderRadius: 20,
       padding: 35,
