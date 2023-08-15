@@ -69,23 +69,56 @@ const HomeScreen = ({ route, navigation }) => {
       });
   };
 
-  const renderNotification = ({ item }) => (
-     <TouchableOpacity /*onPress={() => handleNotificationPress(item)}*/>
-      <View style={styles.notificationContainer}>
-        <Text style={styles.notificationMessage}>{item.message}</Text>  
-        <Text style={styles.notificationTeam}>{item.interested_team_name}</Text>
-        <Text style={styles.notificationDate}>{new Date(item.date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.acceptButton} onPress={() => handleNotificationAccept(item)}>
-            <Icon name="check" size={15} color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.declineButton} onPress={() => handleNotificationDecline(item)}>
-            <Icon name="times" size={15} color="white" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  const renderNotification = ({ item }) => {
+    return (
+      <TouchableOpacity>
+        {item.category === 'request' ? (
+          <View style={styles.notificationContainer}>
+            <Text style={styles.notificationMessage}>{item.message}</Text>
+            <Text style={styles.notificationTeam}>{item.interested_team_name}</Text>
+            <Text style={styles.notificationDate}>
+              {new Date(item.date).toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.acceptButton}
+                onPress={() => handleNotificationAccept(item)}
+              >
+                <Icon name="check" size={15} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.declineButton}
+                onPress={() => handleNotificationDecline(item)}
+              >
+                <Icon name="times" size={15} color="white" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : (
+          <View style={styles.notificationContainer}>
+            <Text style={styles.notificationMessage}>{item.message}</Text>
+            <Text style={styles.notificationDate}>
+              {new Date(item.date).toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.acceptButton}
+                onPress={() => handleNotificationPress(item)}
+              >
+                <Icon name="check" size={15} color="white" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+      </TouchableOpacity>
+    );
+  };
 
   const renderTeam = ({ item }) => (
     <View style={styles.teamContainer}>
