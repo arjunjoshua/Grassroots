@@ -8,10 +8,11 @@ const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
-    if (username.trim() === '' || password.trim() === '' || email.trim() === '') {
+    if (username.trim() === '' || password.trim() === '' || email.trim() === '' || phoneNumber.trim() === '') {
       Alert.alert('Validation Error', 'All fields are required');
       return false;
     }
@@ -31,6 +32,11 @@ const RegisterScreen = ({ navigation }) => {
       return false;
     }
 
+    if(isNaN(phoneNumber.trim())||phoneNumber.trim().length<10) {
+      Alert.alert('Validation Error', 'Please enter a valid phone number');
+      return false;
+    }
+
     return true;
   };
 
@@ -45,6 +51,7 @@ const RegisterScreen = ({ navigation }) => {
       username,
       password,
       email,
+      phoneNumber,
     };
 
     axios
@@ -89,6 +96,12 @@ const RegisterScreen = ({ navigation }) => {
         style={styles.inputEmail}
         onChangeText={(text) => setEmail(text)}
         placeholder="Email"
+      />
+      <TextInput
+        value={phoneNumber}
+        style={styles.input}
+        onChangeText={(text) => setPhoneNumber(text)}
+        placeholder="Phone Number (Your phone number will only be shared with an opposing coach once a game is confirmed.)"
       />
       <Button title="Register" onPress={handleRegister} disabled={loading} style={styles.button} />
       {loading && <ActivityIndicator />}

@@ -48,7 +48,7 @@ const HomeScreen = ({ route, navigation }) => {
   const handleNotificationAccept = (item) => {
     axios.put(`${IP_ADDRESS}:5000/api/notifications/accept`, { userID: userID, notificationID: item._id })
       .then((response) => {
-        Alert.alert('Success', 'Game Confirmed.');
+        Alert.alert('Success', 'Game Confirmed. You will receive an email with your opponent\'s contact information.');
         setNotifications(response.data);
       })
       .catch((error) => {
