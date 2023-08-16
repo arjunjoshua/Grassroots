@@ -34,7 +34,7 @@ const HomeScreen = ({ route, navigation }) => {
   }, []);
 
   const handleNotificationPress = (item) => {
-    axios.put(`${IP_ADDRESS}:5000/api/notifications`, { userID: userID, notificationID: item._id })
+    axios.put(`${IP_ADDRESS}:5000/api/notifications/markRead`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Notification marked as read.');
         setNotifications(response.data);
@@ -58,7 +58,7 @@ const HomeScreen = ({ route, navigation }) => {
   };
 
   const handleNotificationDecline = (item) => {
-    axios.put(`${IP_ADDRESS}:5000/api/notifications`, { userID: userID, notificationID: item._id })
+    axios.put(`${IP_ADDRESS}:5000/api/notifications/markRead`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Game Declined.');
         setNotifications(response.data);
