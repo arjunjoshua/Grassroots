@@ -17,12 +17,12 @@ const OpenMatchesScreen = ({ navigation, route }) => {
   useEffect(() => {
     if (ageGroup) {
       axios
-        .get(`${IP_ADDRESS}:5000/api/matchPost/openMatches`, { params: { ageGroup, userID } })
+        .get(`${IP_ADDRESS}/api/matchPost/openMatches`, { params: { ageGroup, userID } })
         .then(response => setMatches(response.data.matchPosts))
         .catch(error => console.error('There was an error!', error));
     }
       axios 
-        .get(`${IP_ADDRESS}:5000/api/teams/teamInfo`, { params: { userID: userID } })
+        .get(`${IP_ADDRESS}/api/teams/teamInfo`, { params: { userID: userID } })
         .then(response => setTeams(response.data))
         .catch(error => console.error('There was an error!', error));
   }, [ageGroup]);
@@ -75,7 +75,7 @@ const OpenMatchesScreen = ({ navigation, route }) => {
                 style={{backgroundColor: isInterested ? 'green' : 'grey'}}
                 onPress={toggleInterest}
             >
-                <Text style={{color: 'white'}}>Interested</Text>
+                <Text style={{color: 'white'}}> Interested </Text>
             </TouchableOpacity>
 
           </View>

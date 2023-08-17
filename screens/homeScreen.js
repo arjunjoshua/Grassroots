@@ -29,7 +29,7 @@ const HomeScreen = ({ route, navigation }) => {
       })
       .catch(error => {
         console.error('There was an error!', error);
-        Alert.alert('Error', 'Error retrieving notifications. Please try again later.');
+        Alert.alert('Error', 'Error retrieving notifications.');
       });
   }, []);
 

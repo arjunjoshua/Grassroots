@@ -30,7 +30,7 @@ const CreateMatchPost = ({ route, navigation }) => {
   const [date, setDate] = useState(tomorrow);
   
   useEffect(() => {
-    axios.get(`${IP_ADDRESS}:5000/api/teamsInfo`, { params: { userID: userID } })
+    axios.get(`${IP_ADDRESS}/api/teams/teamInfo`, { params: { userID: userID } })
         .then(response => setTeams(response.data))
         .catch(error => console.error('There was an error!', error));
 }, []);
