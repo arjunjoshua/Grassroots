@@ -22,7 +22,7 @@ const OpenMatchesScreen = ({ navigation, route }) => {
         .catch(error => console.error('There was an error!', error));
     }
       axios 
-        .get(`${IP_ADDRESS}:5000/api/teamsInfo`, { params: { userID: userID } })
+        .get(`${IP_ADDRESS}:5000/api/teams/teamInfo`, { params: { userID: userID } })
         .then(response => setTeams(response.data))
         .catch(error => console.error('There was an error!', error));
   }, [ageGroup]);
@@ -48,7 +48,7 @@ const OpenMatchesScreen = ({ navigation, route }) => {
 
       const toggleInterest = () => {
         axios
-              .post(`${IP_ADDRESS}:5000/api/matchPost/Interested`, { matchID: item._id, userID, isInterested: !isInterested, teamID: selectedTeam._id })
+              .post(`${IP_ADDRESS}/api/matchPost/interested`, { matchID: item._id, userID, isInterested: !isInterested, teamID: selectedTeam._id })
               .then(response => {
                 if(response.data.status === 'success') 
                   setIsInterested(!isInterested);
@@ -86,26 +86,6 @@ const OpenMatchesScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-        {/* <Text>Select age group: </Text>
-      <Picker
-        selectedValue={ageGroup}
-        onValueChange={(itemValue, itemIndex) => setAgeGroup(itemValue)}
-        style={styles.picker}
-       >
-        <Picker.Item label="Under 6" value="U-6" />
-        <Picker.Item label="Under 7" value="U-7" />
-        <Picker.Item label="Under 8" value="U-8" />
-        <Picker.Item label="Under 9" value="U-9" />
-        <Picker.Item label="Under 10" value="U-10" />
-        <Picker.Item label="Under 11" value="U-11" />
-        <Picker.Item label="Under 12" value="U-12" />
-        <Picker.Item label="Under 13" value="U-13" />
-        <Picker.Item label="Under 14" value="U-14" />
-        <Picker.Item label="Under 15" value="U-15" />
-        <Picker.Item label="Under 16" value="U-16" />
-        <Picker.Item label="Under 17" value="U-17" />
-        <Picker.Item label="Under 18" value="U-18" />
-      </Picker> */}
       <Text>Select Your Team:</Text>
       <View style={styles.pickerContainer}>
         <Picker

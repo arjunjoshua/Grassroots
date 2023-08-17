@@ -71,7 +71,7 @@ const CreateMatchPost = ({ route, navigation }) => {
   };
 
     axios
-        .post(`${IP_ADDRESS}:5000/api/matchPost`, post)
+        .post(`${IP_ADDRESS}/api/matchPost/createPost`, post)
         .then((response) => {
             setLoading(false);
             if (response.data.status === 'success') {

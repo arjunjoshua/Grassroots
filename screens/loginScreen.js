@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     axios
-    .post(`${IP_ADDRESS}:5000/api/auth/login`, user, { timeout: 15000 })
+    .post(`${IP_ADDRESS}/api/login`, user, { timeout: 15000 })
     .then((response) => {
       setLoading(false);
       // navigate to home with token and userID as params

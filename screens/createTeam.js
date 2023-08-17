@@ -38,7 +38,7 @@ function CreateTeam({ route, navigation }) {
     };
     
     axios
-      .post(`${IP_ADDRESS}:5000/api/teams`, team)
+      .post(`${IP_ADDRESS}/api/teams/createTeam`, team)
         .then((response) => {
             setLoading(false);
             if (response.data.status === 'success') {

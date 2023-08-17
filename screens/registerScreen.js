@@ -55,7 +55,7 @@ const RegisterScreen = ({ navigation }) => {
     };
 
     axios
-      .post(`${IP_ADDRESS}:5000/api/register`, user)
+      .post(`${IP_ADDRESS}/api/register`, user)
       .then((response) => {
         setLoading(false);
         if (response.data.status === 'success') {

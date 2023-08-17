@@ -14,7 +14,7 @@ const HomeScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    axios.get(`${IP_ADDRESS}:5000/api/teamsInfo`, { params: { userID } }) 
+    axios.get(`${IP_ADDRESS}/api/teams/teamInfo`, { params: { userID } }) 
       .then((response) => {
         setTeams(response.data);
       })
@@ -23,7 +23,7 @@ const HomeScreen = ({ route, navigation }) => {
         Alert.alert('Error', 'Error retrieving teams. Please try again later.');
       });
 
-    axios.get(`${IP_ADDRESS}:5000/api/notifications`, { params: {userID} })
+    axios.get(`${IP_ADDRESS}/api/notifications/getNotifs`, { params: {userID} })
       .then((response) => {
         setNotifications(response.data);
       })
@@ -34,7 +34,7 @@ const HomeScreen = ({ route, navigation }) => {
   }, []);
 
   const handleNotificationPress = (item) => {
-    axios.put(`${IP_ADDRESS}:5000/api/notifications/markRead`, { userID: userID, notificationID: item._id })
+    axios.put(`${IP_ADDRESS}/api/notifications/markRead`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Notification marked as read.');
         setNotifications(response.data);
@@ -46,7 +46,7 @@ const HomeScreen = ({ route, navigation }) => {
   };
 
   const handleNotificationAccept = (item) => {
-    axios.put(`${IP_ADDRESS}:5000/api/notifications/accept`, { userID: userID, notificationID: item._id })
+    axios.put(`${IP_ADDRESS}/api/notifications/accept`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Game Confirmed. You will receive an email with your opponent\'s contact information.');
         setNotifications(response.data);
@@ -58,7 +58,7 @@ const HomeScreen = ({ route, navigation }) => {
   };
 
   const handleNotificationDecline = (item) => {
-    axios.put(`${IP_ADDRESS}:5000/api/notifications/markRead`, { userID: userID, notificationID: item._id })
+    axios.put(`${IP_ADDRESS}/api/notifications/markRead`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Game Declined.');
         setNotifications(response.data);
