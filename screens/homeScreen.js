@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Button, Alert, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, Alert, FlatList, Modal, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { Badge, IconButton } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { IP_ADDRESS } from '../constants/constants';
@@ -48,7 +48,7 @@ const HomeScreen = ({ route, navigation }) => {
   const handleNotificationAccept = (item) => {
     axios.put(`${IP_ADDRESS}/api/notifications/accept`, { userID: userID, notificationID: item._id })
       .then((response) => {
-        Alert.alert('Success', 'Game Confirmed. You will receive an email with your opponent\'s contact information.');
+        Alert.alert('Success', 'Game Confirmed. You will receive an email with your opponent\'s contact information. Make sure to check your spam folder!');
         setNotifications(response.data);
       })
       .catch((error) => {
@@ -75,7 +75,7 @@ const HomeScreen = ({ route, navigation }) => {
         {item.category === 'request' ? (
           <View style={styles.notificationContainer}>
             <Text style={styles.notificationMessage}>{item.message}</Text>
-            <Text style={styles.notificationTeam}>{item.interested_team_name}</Text>
+            <Text style={styles.notificationTeam}>{item.interested_team_name}`</Text>
             <Text style={styles.notificationDate}>
               {new Date(item.date).toLocaleTimeString('en-GB', {
                 hour: '2-digit',
@@ -129,16 +129,25 @@ const HomeScreen = ({ route, navigation }) => {
   );
   
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Your Teams: </Text>
-        <IconButton
-          icon={() => <Badge size={10} style={styles.badge}>{notifications.length}</Badge>}
-          color="black"
-          size={20}
-          onPress={() => setModalVisible(true)}
-        />
-      </View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Your Teams: </Text>
+          <View style={styles.notificationButtonContainer}>
+          <Button
+            icon= {( {size, color }) => <MaterialCommunityIcons name="bell" color={color} size={30} />}  // Use a bell icon for notifications
+            textColor='black'
+            onPress={() => setModalVisible(true)}
+            style={styles.buttonNotification}
+            contentStyle={styles.buttonContent}
+          >
+            {notifications.length > 0 && (
+              <View style={styles.badgeContainer}>
+                <Text style={styles.badgeText}>{notifications.length}</Text>
+              </View>
+            )}
+          </Button>
+          </View>
+        </View>
 
       <FlatList
         data={teams}

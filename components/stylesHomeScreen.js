@@ -50,12 +50,40 @@ export const styles = StyleSheet.create({
 
 
     // Notification Modal
+    buttonNotification: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#f5f5f5', // Light grey for visibility against a white background
+    },
+    buttonContent: {
+      height: 50,  // Adjust height and width to your preference
+      width: 45,
+    },
+    badgeContainer: {
+      position: 'absolute',
+      right: 5,
+      top: 0,
+      backgroundColor: 'red',
+      borderRadius: 8,  // Rounded corners
+      minWidth: 16,  // Ensure the width accommodates one or two digits
+      height: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    badgeText: {
+      color: 'white',
+      fontSize: 10,
+    },
+
     badge: {
       position: 'absolute',
       right: -6,
       top: -3,
-      backgroundColor: 'red',
+      backgroundColor: 'red', 
       zIndex: 2,
+      width: 15,
+      height: 15,
     },
     notificationContainer: {
       padding: 10,
@@ -133,5 +161,9 @@ export const styles = StyleSheet.create({
       marginLeft: 5,   // Space between the two buttons
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    
+    notificationButtonContainer: { 
+      position: 'relative',
     },
   });
