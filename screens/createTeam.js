@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import {styles} from '../components/styles.js'
+import {styles} from '../styles/styles.js'
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 

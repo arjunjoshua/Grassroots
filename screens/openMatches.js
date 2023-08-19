@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
-import { styles } from '../components/stylesOpenMatches.js';
+import { styles } from '../styles/stylesOpenMatches.js';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 import { Picker } from '@react-native-picker/picker';

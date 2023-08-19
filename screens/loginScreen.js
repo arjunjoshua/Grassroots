@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Text,   TextInput, View, Alert, ActivityIndicator } from 'react-native';
-import { styles } from '../components/styles';
-//import { CustomButton } from '../components/customButton';
+import { styles } from '../styles/styles';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 

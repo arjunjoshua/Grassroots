@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { IP_ADDRESS } from '../constants/constants';
-import { styles } from '../components/stylesHomeScreen';
+import { styles } from '../styles/stylesHomeScreen';
 
 const HomeScreen = ({ route, navigation }) => {
   const { token, userID } = route.params;

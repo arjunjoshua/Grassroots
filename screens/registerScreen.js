@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextInput, Text, View, Alert, ActivityIndicator } from 'react-native';
-import { styles } from '../components/styles';
+import { styles } from '../styles/styles';
 import axios from 'axios';
 import { IP_ADDRESS, emailRegex, passwordRegex, nameRegex } from '../constants/constants';
 

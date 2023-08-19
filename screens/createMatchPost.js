@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Platform, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { styles } from '../components/styles.js';
+import { styles } from '../styles/styles.js';
 import axios from 'axios';
 import { IP_ADDRESS } from '../constants/constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
