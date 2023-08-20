@@ -13,7 +13,7 @@ const RegisterScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleRegister = async () => {
+  const handleRegister = () => {
     if (!validateForm(username, password, email, phoneNumber)) {
       return;
     }
@@ -53,7 +53,7 @@ const RegisterScreen = ({ navigation }) => {
     <View>
       <TextInput
         value={username}
-        style={styles.input}
+        style={styles.inputUsername}
         onChangeText={(text) => setUsername(text)}
         placeholder="Full Name"
       />
@@ -73,10 +73,11 @@ const RegisterScreen = ({ navigation }) => {
       />
       <TextInput
         value={phoneNumber}
-        style={styles.input}
+        style={styles.inputPassword}
         onChangeText={(text) => setPhoneNumber(text)}
-        placeholder="Phone Number (Your phone number will only be shared with an opposing coach once a game is confirmed.)"
+        placeholder= "Phone Number"
       />
+      <Text style={styles.passwordInstruction}>Your phone number will only be shared with an opposing coach once a game is confirmed.</Text>
       <Button title="Register" onPress={handleRegister} disabled={loading} style={styles.button} />
       {loading && <ActivityIndicator />}
     </View>

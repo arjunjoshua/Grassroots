@@ -41,7 +41,9 @@ const HomeScreen = ({ route, navigation }) => {
           <Text style={styles.title}>Your Teams: </Text>
           <View style={styles.notificationButtonContainer}>
           <Button
-            icon= {( {size, color }) => <MaterialCommunityIcons name="bell" color={color} size={30} />}  // Use a bell icon for notifications
+            // Use a bell icon for notifications
+            icon= {( {size, color }) => <MaterialCommunityIcons 
+             name="bell" color={color} size={30} />}  
             textColor='black'
             onPress={() => setModalVisible(true)}
             style={styles.buttonNotification}
@@ -81,7 +83,7 @@ const HomeScreen = ({ route, navigation }) => {
           ) : (
             <FlatList
               data={notifications}
-              renderItem={renderNotification}
+              renderItem={({ item }) => renderNotification(item, userID, setNotifications)}
               keyExtractor={(item, index) => index.toString()}
             />
           )}

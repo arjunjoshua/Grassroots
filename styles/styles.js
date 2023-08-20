@@ -23,6 +23,16 @@ export const styles = StyleSheet.create({
       marginBottom: 10,
     },
 
+    inputUsername: {
+      marginTop: 15,
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingHorizontal: 10,
+      marginBottom: 10,
+    },
+
     inputPitch: {
       height: 40,
       borderColor: 'gray',
@@ -45,7 +55,7 @@ export const styles = StyleSheet.create({
 
     nonEditableInput: {        
       fontSize: 14,              
-      backgroundColor: '#f3f3f3', 
+      backgroundColor: '#f5f5f5', 
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
@@ -53,24 +63,28 @@ export const styles = StyleSheet.create({
       marginBottom: 5,
       borderRadius: 5,
       paddingHorizontal: 10,    
+      fontStyle: 'italic',
+      color: 'black',
     },
 
     nonEditableInputDT: {        
       fontSize: 14,              
-      backgroundColor: '#f3f3f3', 
+      backgroundColor: '#f5f5f5', 
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
       marginTop: 5,
       borderRadius: 5,
-      paddingHorizontal: 10,    
+      paddingHorizontal: 10,   
+      fontStyle: 'italic', 
+      color: 'black',
     },
 
     inputPassword: {
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
-      marginTop: 20,
+      marginTop: 5,
       marginBottom: 5,
       borderRadius: 5,
       paddingHorizontal: 10,
@@ -80,7 +94,7 @@ export const styles = StyleSheet.create({
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
-      marginTop: 20,
+      marginTop: 10,
       marginBottom: 20,
       borderRadius: 5,
       paddingHorizontal: 10,
@@ -89,6 +103,7 @@ export const styles = StyleSheet.create({
     passwordInstruction: {
       fontSize: 12,
       fontStyle: 'italic',
+      marginBottom: 5,
     },
 
     button: {
@@ -127,6 +142,7 @@ export const styles = StyleSheet.create({
       borderColor: 'gray',
       borderWidth: 1,
       marginBottom: 16,
+      paddingLeft: 10,
     },
 
     pickerContainer: {
@@ -143,7 +159,7 @@ export const styles = StyleSheet.create({
       marginTop: 10,
       backgroundColor: '#2196F3',
       height: 30,
-      width: 175,
+      width: 100,
       padding: 5,
       alignItems: 'center',
       textAlign: 'center',

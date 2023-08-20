@@ -2,9 +2,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/stylesHomeScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { handleNotificationAccept, handleNotificationDecline, handleNotificationPress } from './handleNotification';
+import { set } from 'mongoose';
 
 //render notification based on category
-const renderNotification = ({ item }) => {
+export const renderNotification = (item, userID, setNotifications) => {
     return (
       <TouchableOpacity>
         {item.category === 'request' ? (
@@ -20,13 +21,13 @@ const renderNotification = ({ item }) => {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.acceptButton}
-                onPress={() => handleNotificationAccept(item)}
+                onPress={() => handleNotificationAccept(item, userID, setNotifications)}
               >
                 <Icon name="check" size={15} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.declineButton}
-                onPress={() => handleNotificationDecline(item)}
+                onPress={() => handleNotificationDecline(item, userID, setNotifications)}
               >
                 <Icon name="times" size={15} color="white" />
               </TouchableOpacity>
@@ -44,7 +45,7 @@ const renderNotification = ({ item }) => {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.acceptButton}
-                onPress={() => handleNotificationPress(item)}
+                onPress={() => handleNotificationPress(item, userID, setNotifications)}
               >
                 <Icon name="check" size={15} color="white" />
               </TouchableOpacity>
@@ -54,5 +55,3 @@ const renderNotification = ({ item }) => {
       </TouchableOpacity>
     );
   };
-
-  module.exports = renderNotification;

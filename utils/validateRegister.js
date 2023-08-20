@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import { nameRegex, passwordRegex, emailRegex } from '../constants/constants';
 
 //validate for blank fields and validate the format
-const validateForm = (username, password, email, phoneNumber) => {
+export const validateForm = (username, password, email, phoneNumber) => {
     if (username.trim() === '' || password.trim() === '' || email.trim() === '' || phoneNumber.trim() === '') {
       Alert.alert('Validation Error', 'All fields are required');
       return false;
@@ -30,5 +30,3 @@ const validateForm = (username, password, email, phoneNumber) => {
 
     return true;
   };
-
-  module.exports = validateForm;

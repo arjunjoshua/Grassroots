@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { IP_ADDRESS } from '../constants/constants';
 
 // mark notification as read
-export const handleNotificationPress = (item) => {
+export const handleNotificationPress = (item, userID, setNotifications) => {
     axios.put(`${IP_ADDRESS}/api/notifications/markRead`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Notification marked as read.');
@@ -16,7 +16,7 @@ export const handleNotificationPress = (item) => {
   };
 
 // accept request and call the backend to update the database
-export const handleNotificationAccept = (item) => {
+export const handleNotificationAccept = (item, userID, setNotifications) => {
     axios.put(`${IP_ADDRESS}/api/notifications/accept`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Game Confirmed. You will receive an email with your opponent\'s contact information. Make sure to check your spam folder!');
@@ -29,7 +29,7 @@ export const handleNotificationAccept = (item) => {
   };
 
 // decline request works the same as mark as read
-export const handleNotificationDecline = (item) => {
+export const handleNotificationDecline = (item, userID, setNotifications) => {
     axios.put(`${IP_ADDRESS}/api/notifications/markRead`, { userID: userID, notificationID: item._id })
       .then((response) => {
         Alert.alert('Success', 'Game Declined.');

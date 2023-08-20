@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Platform, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Platform, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from '../styles/styles.js';
@@ -92,98 +92,105 @@ const CreateMatchPost = ({ route, navigation }) => {
     };
 
   return (
-    <View style={styles.containerCreateTeam}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      >
+      <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+        <View style={styles.containerCreateTeam}>
 
-      <Text>Team:</Text>
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={selectedTeam?._id}
-          onValueChange={(itemValue, itemIndex) => handleTeamChange(itemValue)}
-        >
-          {teams.map((team, index) => (
-            <Picker.Item key={index} label={team.team_name} value={team._id} />
-          ))}
-        </Picker>
-      </View>
+          <Text>Team:</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={selectedTeam?._id}
+              onValueChange={(itemValue, itemIndex) => handleTeamChange(itemValue)}
+            >
+              {teams.map((team, index) => (
+                <Picker.Item key={index} label={team.team_name} value={team._id} />
+              ))}
+            </Picker>
+          </View>
 
-      <TextInput 
-        style={styles.nonEditableInputDT} 
-        value={`Date: ${date.toLocaleDateString()}`} 
-        editable={false} 
-      />
+          <TextInput 
+            style={styles.nonEditableInputDT} 
+            value={`Date: ${date.toLocaleDateString()}`} 
+            editable={false} 
+          />
 
-      <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsPickerShown(true)}>
-        <Text>Change Date</Text>
-      </TouchableOpacity>
-     
-      {isPickerShown && ( 
-      <DateTimePicker
-        testID="dateTimePicker"
-        value={date}
-        mode="date"
-        is24Hour={true}
-        display="Calendar"
-        onChange={onChange}
-        minimumDate={now}
-      />
-      )}
+          <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsPickerShown(true)}>
+            <Text>Change Date</Text>
+          </TouchableOpacity>
+        
+          {isPickerShown && ( 
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode="date"
+            is24Hour={true}
+            display="Calendar"
+            onChange={onChange}
+            minimumDate={now}
+          />
+          )}
 
-      <TextInput 
-        style={styles.nonEditableInputDT} 
-        value={`Time: ${time.toLocaleTimeString()}`} 
-        editable={false} 
-      />
+          <TextInput 
+            style={styles.nonEditableInputDT} 
+            value={`Time: ${time.toLocaleTimeString()}`} 
+            editable={false} 
+          />
 
-      <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsTimePickerShown(true)}>
-        <Text>Change Time</Text>
-      </TouchableOpacity>
-     
-      {isTimePickerShown && ( 
-      <DateTimePicker
-        testID="dateTimePicker"
-        value={time}
-        mode="time"
-        is24Hour={true}
-        display="Clock"
-        onChange={onChangeTime}
-      />
-      )}
+          <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsTimePickerShown(true)}>
+            <Text>Change Time</Text>
+          </TouchableOpacity>
+        
+          {isTimePickerShown && ( 
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={time}
+            mode="time"
+            is24Hour={true}
+            display="Clock"
+            onChange={onChangeTime}
+          />
+          )}
 
-      <TextInput
-        style={styles.inputPitch}
-        placeholder="Pitch Name"
-        value={pitchName}
-        onChangeText={setPitchName}
-      />
+          <TextInput
+            style={styles.inputPitch}
+            placeholder="Pitch Name"
+            value={pitchName}
+            onChangeText={setPitchName}
+          />
 
-      <TextInput
-        style={styles.inputPitch}
-        placeholder="Pitch Location"
-        value={pitchLocation}
-        onChangeText={setPitchLocation}
-        />
+          <TextInput
+            style={styles.inputPitch}
+            placeholder="Pitch Location"
+            value={pitchLocation}
+            onChangeText={setPitchLocation}
+            />
 
-      <TextInput
-        style={styles.nonEditableInput}
-        value={`Age group: ${requiredAgeGroup}`}
-        editable={false}
-      />
+          <TextInput
+            style={styles.nonEditableInput}
+            value={`Age group: ${requiredAgeGroup}`}
+            editable={false}
+          />
 
-      <TextInput
-        style={styles.nonEditableInput}
-        value={`Proficiency level: ${requiredProficiencyLevel}`}
-        editable={false}
-      />
+          <TextInput
+            style={styles.nonEditableInput}
+            value={`Proficiency level: ${requiredProficiencyLevel}`}
+            editable={false}
+          />
 
-      <TextInput
-        style={styles.inputDetails}
-        placeholder="Additional Details"
-        value={details}
-        onChangeText={setDetails}
-      />
+          <TextInput
+            style={styles.inputDetails}
+            placeholder="Additional Details"
+            value={details}
+            onChangeText={setDetails}
+          />
 
-      <Button style={styles.buttonDateTime} title="Create Match Post" onPress={handleCreatePost} disabled={loading}/>
-    </View>
+          <Button style={styles.buttonDateTime} title="Create Match Post" onPress={handleCreatePost} disabled={loading}/>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

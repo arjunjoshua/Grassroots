@@ -26,10 +26,15 @@ function HomeDrawer({route}) {
       </DrawerContentScrollView>
     )}
   >
-      <Drawer.Screen name="HomeDrawer" component={HomeScreen} initialParams={{ token, userID}} options={{ title: 'Home'}} />
-      <Drawer.Screen name="CreateTeam" component={CreateTeam} initialParams={{ token, userID}} options={{ title: 'Create a new team' }}/>
-      <Drawer.Screen name="CreateMatchPost" component={CreateMatchPost} initialParams={{ token, userID}} options={{ title: 'Create post for a match' }}/>
-      <Drawer.Screen name="AvailableMatches" component={OpenMatchesScreen} initialParams={{userID}} options={{ title: 'Available Matches' }}/>
+      <Drawer.Screen 
+      name="HomeDrawer" component={HomeScreen} 
+      initialParams={{ token, userID}} options={{ title: 'Home'}} />
+      <Drawer.Screen name="CreateTeam" component={CreateTeam} 
+      initialParams={{ token, userID}} options={{ title: 'Create a new team' }}/>
+      <Drawer.Screen name="CreateMatchPost" component={CreateMatchPost} 
+      initialParams={{ token, userID}} options={{ title: 'Create post for a match' }}/>
+      <Drawer.Screen name="AvailableMatches" component={OpenMatchesScreen} 
+      initialParams={{userID}} options={{ title: 'Available Matches' }}/>
     </Drawer.Navigator>
   );
 }
@@ -41,7 +46,8 @@ const App = () => {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Log In', headerLeft: null }} />
         <Stack.Screen name="Home" component={HomeDrawer} options={{ title: 'Home', headerShown: false }}  />
-        <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Register', headerLeft: null }} />
+        <Stack.Screen name="Register" component={RegisterScreen} 
+        options={{ title: 'Register', headerLeft: null }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

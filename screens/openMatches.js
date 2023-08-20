@@ -29,7 +29,6 @@ const OpenMatchesScreen = ({ navigation, route }) => {
     const selectedTeam = teams.find(team => team._id === teamID);
     setSelectedTeam(selectedTeam);
     setAgeGroup(selectedTeam.age_group);
-    //setRequiredProficiencyLevel(selectedTeam.proficiency_level);
   }
 
     const MatchItem = ({ item }) => {
@@ -46,7 +45,8 @@ const OpenMatchesScreen = ({ navigation, route }) => {
 
       const toggleInterest = () => {
         axios
-              .post(`${IP_ADDRESS}/api/matchPost/interested`, { matchID: item._id, userID, isInterested: !isInterested, teamID: selectedTeam._id })
+              .post(`${IP_ADDRESS}/api/matchPost/interested`, { matchID: item._id, userID, isInterested: !isInterested, 
+                teamID: selectedTeam._id })
               .then(response => {
                 if(response.data.status === 'success') 
                   setIsInterested(!isInterested);
