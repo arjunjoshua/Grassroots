@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Button, TextInput, Text, View, Alert, ActivityIndicator } from 'react-native';
 import { styles } from '../styles/styles';
 import axios from 'axios';
-import { IP_ADDRESS, emailRegex, passwordRegex, nameRegex } from '../constants/constants';
+import { IP_ADDRESS } from '../constants/constants';
+import { validateForm } from '../utils/validateRegister';
+
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -11,37 +13,8 @@ const RegisterScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const validateForm = () => {
-    if (username.trim() === '' || password.trim() === '' || email.trim() === '' || phoneNumber.trim() === '') {
-      Alert.alert('Validation Error', 'All fields are required');
-      return false;
-    }
-    
-    if (!nameRegex.test(username.trim())) {
-      Alert.alert('Validation Error', 'Please enter your full name');
-      return false;
-    }
-
-    if (!emailRegex.test(email.trim())) {
-      Alert.alert('Validation Error', 'Please enter a valid email address');
-      return false;
-    }
-
-    if (!passwordRegex.test(password.trim())) {
-      Alert.alert('Validation Error', 'Password must be at least 8 characters long and contain at least 1 special character');
-      return false;
-    }
-
-    if(isNaN(phoneNumber.trim())||phoneNumber.trim().length<10) {
-      Alert.alert('Validation Error', 'Please enter a valid phone number');
-      return false;
-    }
-
-    return true;
-  };
-
   const handleRegister = async () => {
-    if (!validateForm()) {
+    if (!validateForm(username, password, email, phoneNumber)) {
       return;
     }
 
@@ -54,6 +27,7 @@ const RegisterScreen = ({ navigation }) => {
       phoneNumber,
     };
 
+    //API call to register user
     axios
       .post(`${IP_ADDRESS}/api/register`, user)
       .then((response) => {

@@ -13,6 +13,7 @@ import OpenMatchesScreen from './screens/openMatches';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
+//render the side drawer with navigation options
 function HomeDrawer({route}) {
   const { token, userID } = route.params;
   return (
@@ -33,6 +34,7 @@ function HomeDrawer({route}) {
   );
 }
 
+//main navigation container, which calls the homeDrawer once logged in
 const App = () => {
   return (
     <NavigationContainer>

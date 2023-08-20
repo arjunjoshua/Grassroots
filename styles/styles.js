@@ -18,9 +18,52 @@ export const styles = StyleSheet.create({
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
-      marginTop: 20,
       borderRadius: 5,
       paddingHorizontal: 10,
+      marginBottom: 10,
+    },
+
+    inputPitch: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingHorizontal: 10,
+      marginBottom: 10,
+      marginTop: 5,
+    },
+
+    inputDetails: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingHorizontal: 10,
+      marginBottom: 13,
+      marginTop: 10,
+    },
+
+    nonEditableInput: {        
+      fontSize: 14,              
+      backgroundColor: '#f3f3f3', 
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginTop: 10,
+      marginBottom: 5,
+      borderRadius: 5,
+      paddingHorizontal: 10,    
+    },
+
+    nonEditableInputDT: {        
+      fontSize: 14,              
+      backgroundColor: '#f3f3f3', 
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginTop: 5,
+      borderRadius: 5,
+      paddingHorizontal: 10,    
     },
 
     inputPassword: {
@@ -49,6 +92,7 @@ export const styles = StyleSheet.create({
     },
 
     button: {
+      marginTop: 10,
       marginBottom: 10,
       backgroundColor: '#2196F3',
       padding: 10,
@@ -96,7 +140,7 @@ export const styles = StyleSheet.create({
     },
 
     buttonDateTime: {
-      marginBottom: 10,
+      marginTop: 10,
       backgroundColor: '#2196F3',
       height: 30,
       width: 175,
@@ -104,6 +148,7 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       textAlign: 'center',
       borderRadius: 3,
+      marginBottom: 15,
     },
 
     registerText: {

@@ -8,9 +8,7 @@ import { Picker } from '@react-native-picker/picker';
 const OpenMatchesScreen = ({ navigation, route }) => {
   const [ageGroup, setAgeGroup] = useState('');
   const [matches, setMatches] = useState([]);
-  // const [ageGroups, setAgeGroups] = useState('U-6');
   const { userID } = route.params;
-  // const [isInterested, setIsInterested] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [teams, setTeams] = useState([]);
 

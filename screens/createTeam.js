@@ -14,7 +14,7 @@ function CreateTeam({ route, navigation }) {
   const { token, userID } = route.params;
 
   const validateForm = () => {
-    if (teamName.trim() === '' || ageGroup.trim() === '' || proficiencyLevel.trim() === '' || kitColor.trim() === '') {
+    if (teamName.trim() === '' || kitColor.trim() === '') {
         Alert.alert('Validation Error', 'All fields are required');
         return false;
         }
@@ -84,18 +84,18 @@ function CreateTeam({ route, navigation }) {
           <Picker.Item label="Under 18" value="U-18" />
         </Picker>
       </View>
-      <Text>Proficiency Level:</Text>
+      <Text>Proficiency Level: (1-low, 5-high)</Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={proficiencyLevel}
           onValueChange={(itemValue, itemIndex) =>
             setProficiencyLevel(itemValue)
           }>
-          <Picker.Item label="1 - lowest" value="1" />
+          <Picker.Item label="1" value="1" />
           <Picker.Item label="2" value="2" />
           <Picker.Item label="3" value="3" />
           <Picker.Item label="4" value="4" />
-          <Picker.Item label="5 - highest" value="5" />
+          <Picker.Item label="5" value="5" />
         </Picker>
       </View>
 

@@ -106,7 +106,12 @@ const CreateMatchPost = ({ route, navigation }) => {
         </Picker>
       </View>
 
-      <TextInput style={styles.input} value={`Date: ${date.toLocaleDateString()}`} editable={false} />
+      <TextInput 
+        style={styles.nonEditableInputDT} 
+        value={`Date: ${date.toLocaleDateString()}`} 
+        editable={false} 
+      />
+
       <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsPickerShown(true)}>
         <Text>Change Date</Text>
       </TouchableOpacity>
@@ -123,7 +128,12 @@ const CreateMatchPost = ({ route, navigation }) => {
       />
       )}
 
-      <TextInput style={styles.input} value={`Time: ${time.toLocaleTimeString()}`} editable={false} />
+      <TextInput 
+        style={styles.nonEditableInputDT} 
+        value={`Time: ${time.toLocaleTimeString()}`} 
+        editable={false} 
+      />
+
       <TouchableOpacity style={styles.buttonDateTime} onPress={() => setIsTimePickerShown(true)}>
         <Text>Change Time</Text>
       </TouchableOpacity>
@@ -140,39 +150,39 @@ const CreateMatchPost = ({ route, navigation }) => {
       )}
 
       <TextInput
-        style={styles.input}
+        style={styles.inputPitch}
         placeholder="Pitch Name"
         value={pitchName}
         onChangeText={setPitchName}
       />
 
       <TextInput
-        style={styles.input}
+        style={styles.inputPitch}
         placeholder="Pitch Location"
         value={pitchLocation}
         onChangeText={setPitchLocation}
         />
 
       <TextInput
-        style={styles.input}
-        value={requiredAgeGroup}
+        style={styles.nonEditableInput}
+        value={`Age group: ${requiredAgeGroup}`}
         editable={false}
       />
 
       <TextInput
-        style={styles.input}
-        value={requiredProficiencyLevel}
+        style={styles.nonEditableInput}
+        value={`Proficiency level: ${requiredProficiencyLevel}`}
         editable={false}
       />
 
       <TextInput
-        style={styles.input}
+        style={styles.inputDetails}
         placeholder="Additional Details"
         value={details}
         onChangeText={setDetails}
       />
 
-      <Button title="Create Match Post" onPress={handleCreatePost} disabled={loading}/>
+      <Button style={styles.buttonDateTime} title="Create Match Post" onPress={handleCreatePost} disabled={loading}/>
     </View>
   );
 };

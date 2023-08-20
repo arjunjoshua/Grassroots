@@ -31,6 +31,7 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
+    // authenticate user with backend
     axios
     .post(`${IP_ADDRESS}/api/login`, user, { timeout: 15000 })
     .then((response) => {
@@ -62,7 +63,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <TextInput
         value={password}
-        style={styles.inputEmail} //using inputEmail just to ensure the spacing witht the button is the same as the register screen
+        style={styles.inputEmail} //using inputEmail just to ensure the spacing with the button is the same as the register screen
         onChangeText={(text) => setPassword(text)}
         placeholder="Password"
         secureTextEntry

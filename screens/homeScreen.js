@@ -3,9 +3,10 @@ import { View, Text, Alert, FlatList, Modal, TouchableOpacity } from 'react-nati
 import axios from 'axios';
 import { Button } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { IP_ADDRESS } from '../constants/constants';
 import { styles } from '../styles/stylesHomeScreen';
+import { renderNotification } from '../utils/renderNotification';
+import { renderTeam } from '../utils/renderTeam';
 
 const HomeScreen = ({ route, navigation }) => {
   const { token, userID } = route.params;
@@ -13,6 +14,7 @@ const HomeScreen = ({ route, navigation }) => {
   const [notifications, setNotifications] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
+  // get teams and notifications on page load
   useEffect(() => {
     axios.get(`${IP_ADDRESS}/api/teams/teamInfo`, { params: { userID } }) 
       .then((response) => {
@@ -32,101 +34,6 @@ const HomeScreen = ({ route, navigation }) => {
         Alert.alert('Error', 'Error retrieving notifications.');
       });
   }, []);
-
-  const handleNotificationPress = (item) => {
-    axios.put(`${IP_ADDRESS}/api/notifications/markRead`, { userID: userID, notificationID: item._id })
-      .then((response) => {
-        Alert.alert('Success', 'Notification marked as read.');
-        setNotifications(response.data);
-      })
-      .catch((error) => {
-        console.error('There was an error!', error);
-        Alert.alert('Error', error);
-      });
-  };
-
-  const handleNotificationAccept = (item) => {
-    axios.put(`${IP_ADDRESS}/api/notifications/accept`, { userID: userID, notificationID: item._id })
-      .then((response) => {
-        Alert.alert('Success', 'Game Confirmed. You will receive an email with your opponent\'s contact information. Make sure to check your spam folder!');
-        setNotifications(response.data);
-      })
-      .catch((error) => {
-        console.error('There was an error!', error);
-        Alert.alert('Error', error);
-      });
-  };
-
-  const handleNotificationDecline = (item) => {
-    axios.put(`${IP_ADDRESS}/api/notifications/markRead`, { userID: userID, notificationID: item._id })
-      .then((response) => {
-        Alert.alert('Success', 'Game Declined.');
-        setNotifications(response.data);
-      })
-      .catch((error) => {
-        console.error('There was an error!', error);
-        Alert.alert('Error', error);
-      });
-  };
-
-  const renderNotification = ({ item }) => {
-    return (
-      <TouchableOpacity>
-        {item.category === 'request' ? (
-          <View style={styles.notificationContainer}>
-            <Text style={styles.notificationMessage}>{item.message}</Text>
-            <Text style={styles.notificationTeam}>{item.interested_team_name}`</Text>
-            <Text style={styles.notificationDate}>
-              {new Date(item.date).toLocaleTimeString('en-GB', {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.acceptButton}
-                onPress={() => handleNotificationAccept(item)}
-              >
-                <Icon name="check" size={15} color="white" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.declineButton}
-                onPress={() => handleNotificationDecline(item)}
-              >
-                <Icon name="times" size={15} color="white" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.notificationContainer}>
-            <Text style={styles.notificationMessage}>{item.message}</Text>
-            <Text style={styles.notificationDate}>
-              {new Date(item.date).toLocaleTimeString('en-GB', {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.acceptButton}
-                onPress={() => handleNotificationPress(item)}
-              >
-                <Icon name="check" size={15} color="white" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </TouchableOpacity>
-    );
-  };
-
-  const renderTeam = ({ item }) => (
-    <View style={styles.teamContainer}>
-      <Text style={styles.team_name}>{item.team_name}</Text>
-      <Text style={styles.team_info}>{item.age_group}</Text>
-      <Text style={styles.team_info}>Level: {item.proficiency_level}</Text>
-    </View>
-  );
   
   return (
       <View style={styles.container}>
@@ -155,7 +62,7 @@ const HomeScreen = ({ route, navigation }) => {
         keyExtractor={(item) => item._id}
       />
 
-<Modal
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
