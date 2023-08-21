@@ -11,7 +11,7 @@ export const renderNotification = (item, userID, setNotifications) => {
         {item.category === 'request' ? (
           <View style={styles.notificationContainer}>
             <Text style={styles.notificationMessage}>{item.message}</Text>
-            <Text style={styles.notificationTeam}>{item.interested_team_name}`</Text>
+            <Text style={styles.notificationTeam}>{`Team: ${item.interested_team_name}`}</Text>
             <Text style={styles.notificationDate}>
               {new Date(item.date).toLocaleTimeString('en-GB', {
                 hour: '2-digit',
