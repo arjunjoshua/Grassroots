@@ -8,19 +8,19 @@ export const styles = StyleSheet.create({
     
     matchContainer: {
       backgroundColor: '#1fff1',
+      flexDirection: 'column',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 6,
-      flexDirection: 'row',
       flexWrap: 'wrap',
-      justifyContent: 'space-between',
+      //justifyContent: 'space-between',
       borderRadius: 5,
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
         height: 2,
       },
-      height : 75,
+      height : 150,
       width : 350,
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
@@ -47,5 +47,23 @@ export const styles = StyleSheet.create({
       borederRadius: 5,
       overflow: 'hidden',
       justifyContent: 'center',
+    },
+
+    itemText: {
+      flex: 1,
+      marginHorizontal: 5,
+    },
+
+    button: {
+      alignItems: 'center',  
+      justifyContent: 'center',  
+      height: 40,
+      marginTop: 10,
+    },
+
+    rowContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 10,
     },
   });

@@ -64,19 +64,22 @@ const OpenMatchesScreen = ({ navigation, route }) => {
     }, [item]);
 
       return (
-          <View style={styles.matchContainer}>
-              <Text>{item.pitchName}</Text>
-              <Text>{item.pitchLocation}</Text>
-              <Text>{formattedDate}</Text>
-              <Text>{formattedTime}</Text>
-              <TouchableOpacity 
-                style={{backgroundColor: isInterested ? 'green' : 'grey'}}
-                onPress={toggleInterest}
-            >
-                <Text style={{color: 'white'}}> Interested </Text>
-            </TouchableOpacity>
-
+        <View style={styles.matchContainer}>
+          <View style={styles.rowContainer}>
+              <Text style={styles.itemText}>{item.pitchName}</Text>
+              <Text style={styles.itemText}>{item.pitchLocation}</Text>
           </View>
+          <View style={styles.rowContainer}>
+              <Text style={styles.itemText}>{formattedDate}</Text>
+              <Text style={styles.itemText}>{formattedTime}</Text>
+          </View>
+            <TouchableOpacity 
+                    style={{...styles.button, backgroundColor: isInterested ? 'green' : 'grey'}}
+                    onPress={toggleInterest}
+                >
+                    <Text style={{color: 'white'}}> Interested </Text>
+            </TouchableOpacity>
+        </View>
       );
   };
 

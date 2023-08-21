@@ -50,7 +50,7 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={styles.containerCreateTeam}>
       <TextInput
         value={username}
         style={styles.inputUsername}
