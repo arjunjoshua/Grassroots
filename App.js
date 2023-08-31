@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react-native-get-random-values';
 import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,6 +10,7 @@ import RegisterScreen from './screens/registerScreen';
 import CreateTeam from './screens/createTeam';
 import CreateMatchPost from './screens/createMatchPost';
 import OpenMatchesScreen from './screens/openMatches';
+import { CommonActions } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -22,7 +24,17 @@ function HomeDrawer({route}) {
     drawerContent={(props) => (
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-        <Button title="Logout" onPress={() => props.navigation.replace('Login')} />
+        <Button 
+            title="Logout" 
+            onPress={() => {
+                props.navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [{ name: 'Login' }],
+                    })
+                );
+            }} 
+        />
       </DrawerContentScrollView>
     )}
   >
